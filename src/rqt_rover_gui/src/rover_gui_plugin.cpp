@@ -311,15 +311,20 @@ void RoverGUIPlugin::joyEventHandler(const sensor_msgs::Joy::ConstPtr& joy_msg)
 
      if (joystick_publisher)
         {
+	//emit sendInfoLogMessage("Potato");
          // Handle drive commands - BEGIN
 
         //Set the gui values. Filter values to be large enough to move the physical rover.
+
+
         if (joy_msg->axes[right_stick_y_axis] >= 0.1)
         {
+		
             emit joystickDriveForwardUpdate(joy_msg->axes[right_stick_y_axis]);
         }
         if (joy_msg->axes[right_stick_y_axis] <= -0.1)
         {
+	    //emit joystickDriveForwardUpdate(0.5);
             emit joystickDriveBackwardUpdate(-joy_msg->axes[right_stick_y_axis]);
         }
         //If value is too small, display 0.
@@ -327,6 +332,12 @@ void RoverGUIPlugin::joyEventHandler(const sensor_msgs::Joy::ConstPtr& joy_msg)
         {
             emit joystickDriveForwardUpdate(0);
             emit joystickDriveBackwardUpdate(0);
+        }
+
+	if (joy_msg->buttons[0])
+        {
+      	    emit sendInfoLogMessage("Potato");
+            emit joystickDriveForwardUpdate(0.5);
         }
 
         if (joy_msg->axes[right_stick_x_axis] >= 0.1)
@@ -406,7 +417,7 @@ void RoverGUIPlugin::joyEventHandler(const sensor_msgs::Joy::ConstPtr& joy_msg)
         }
 
         // Handle gripper commands - END
-
+	//emit sendInfoLogMessage(QString::number(joy_msg->axes[right_stick_y_axis]));
 
         joystick_publisher.publish(joy_msg);
      }

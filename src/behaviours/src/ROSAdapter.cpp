@@ -585,6 +585,10 @@ void joyCmdHandler(const sensor_msgs::Joy::ConstPtr& message) {
   const int max_motor_cmd = 255;
   if (currentMode == 0 || currentMode == 1) {	//takes data coming from joystick and stores into linear and angular variables
     float linear  = abs(message->axes[4]) >= 0.1 ? message->axes[4]*max_motor_cmd : 0.0;
+    if(message->buttons[0])
+    {
+        linear = max_motor_cmd;
+    }
     float angular = abs(message->axes[3]) >= 0.1 ? message->axes[3]*max_motor_cmd : 0.0;
 
     float left = linear - angular;
