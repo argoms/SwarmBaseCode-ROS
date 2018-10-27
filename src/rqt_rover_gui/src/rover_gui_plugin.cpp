@@ -269,6 +269,10 @@ namespace rqt_rover_gui
     diag_log_subscriber = nh.subscribe("/diagsLog", 10, &RoverGUIPlugin::diagLogMessageEventHandler, this);
 
     emit updateNumberOfSatellites("<font color='white'>---</font>");
+    
+    //rampancy testing
+    connect(this, SIGNAL(rampancyBeginSignal()),
+			joystickGripperInterface, SLOT(rampancyBegin()));
 
   }
 
@@ -334,12 +338,17 @@ void RoverGUIPlugin::joyEventHandler(const sensor_msgs::Joy::ConstPtr& joy_msg)
             emit joystickDriveBackwardUpdate(0);
         }
 
-	if (joy_msg->buttons[0])
+		if (joy_msg->buttons[0])
         {
       	    emit sendInfoLogMessage("Potato");
-            emit joystickDriveForwardUpdate(0.5);
+            emit joystickDriveForwardUpdate(1);
         }
 
+		if (joy_msg->buttons[1])
+        {
+      	    emit sendInfoLogMessage("Ping");
+            emit rampancyBeginSignal();
+        }
         if (joy_msg->axes[right_stick_x_axis] >= 0.1)
         {
 	  emit joystickDriveLeftUpdate(joy_msg->axes[right_stick_x_axis]);

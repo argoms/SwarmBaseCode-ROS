@@ -70,6 +70,8 @@ JoystickGripperInterface::JoystickGripperInterface(ros::NodeHandle nh, string ro
     this->roverName = roverName;
 
     ready = true;
+    
+    connect(this, SIGNAL(sendInfoLogMessage(QString)), this, SLOT(receiveInfoLogMessage(QString)));
 }
 
 // Receives input from the joystick representing the direction and speed with which to move the wrist
@@ -143,7 +145,7 @@ void JoystickGripperInterface::changeRovers(string roverName)
 
     // Setup the gripper angle command publishers
     gripperWristAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/wristAngle/cmd", 10, this);
-    gripperFingerAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/fingerAngle/cmd", 10, this);
+    gripperFingerAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/fsingerAngle/cmd", 10, this);
   ready = true;
 }
 
@@ -153,4 +155,10 @@ JoystickGripperInterface::~JoystickGripperInterface(){
 
     gripperWristAnglePublisher.shutdown();
     gripperFingerAnglePublisher.shutdown();
+}
+
+void JoystickGripperInterface::rampancyBegin()
+{
+	//emit sendInfoLogMessage("Pong");
+	cout << "TEST";
 }

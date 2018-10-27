@@ -64,9 +64,15 @@ signals:
     void sendJoystickGripperWristControlTimerStop();
     void sendJoystickGripperFingerControlTimerStart(int);
     void sendJoystickGripperFingerControlTimerStop();
+    
+    void sendInfoLogMessage(QString text);
+    
+public slots:
+	void rampancyBegin();
 
 private slots:
-
+	void receiveInfoLogMessage(QString text);
+    
 private:
 
     // Publishers for sending gripper commands to the ROS topics
