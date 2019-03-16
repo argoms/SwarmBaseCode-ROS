@@ -145,7 +145,7 @@ void JoystickGripperInterface::changeRovers(string roverName)
 
     // Setup the gripper angle command publishers
     gripperWristAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/wristAngle/cmd", 10, this);
-    gripperFingerAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/fsingerAngle/cmd", 10, this);
+    gripperFingerAnglePublisher = nh.advertise<std_msgs::Float32>("/"+roverName+"/fingerAngle/cmd", 10, this);
   ready = true;
 }
 
